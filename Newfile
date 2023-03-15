@@ -9,10 +9,10 @@ node{
     stage('Build'){
         sh "${mavenhome}/bin/mvn clean package"
     }
-   /* stage ('ExecuteSonarqubeReport'){
+   stage ('ExecuteSonarqubeReport'){
         sh "${mavenhome}/bin/mvn sonar:sonar"
     }
-    stage ('UploadArtifactsIntoNexus'){
+   /* stage ('UploadArtifactsIntoNexus'){
         sh "${mavenhome}/bin/mvn deploy"
     }
     stage ('DeployAppintoTomcatServer'){
