@@ -1,4 +1,4 @@
-node{
+node('nodes'){
     
 echo "Job name is: ${env.JOB_NAME}"
 //echo "Build Number is: ${env.BUILD_NUMBER}"
