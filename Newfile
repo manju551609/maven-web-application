@@ -30,6 +30,5 @@ stage('DeployAppIntoTomcatServer'){
 }
 }
 }
-  
 }//node closing
 
