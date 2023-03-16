@@ -3,3 +3,21 @@ node('nodes'){
 def mavenhome = tool name: maven'3.9.0'
 
 stage('CheckoutCode'){
+git branch: '*/development', credentialsId: 'b037acf6-2509-403d-b519-ac7c67f7c92c', url: 'https://github.com/manju551609/maven-web-application.git'
+}
+stage('build'){
+sh "${mavenhome}/bin/mvn clean package"
+}
+stage('ExecuteSonarQubeReport'){
+sh "${mavenhome}/bin/mvn sonar:sonar"
+}
+stage('UploadArtifactsintoNexus'){
+sh "${mavenhome}/bin/mvn deploy"
+}
+stage('DeployappintoTomcatserver'){
+sshagent(['3cf4b959-bbb3-44aa-80fe-cfdcfa18d182']) {
+    // some block
+}
+sh "scp -o stringhostkeychecking=no target/maven-web-application.war ec2-user@172.31.26.243:(/opt/apache-tomcat-9.0.71/webapps)/"
+}
+}
