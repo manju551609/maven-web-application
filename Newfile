@@ -1,9 +1,13 @@
 node{
 
     def mavenhome = tool name: "maven3.9.0"
+    
     echo "the job name is : ${env.JOB_NAME}"
     echo "the Branch name is : ${env.BRANCH_NAME}"
     echo "the node name is : ${env.NODE_NAME}"
+    
+    try{
+    sendSlackNotification("STARTED")
     
     stage ('Checkoutcode'){
    git branch: 'development', credentialsId: 'b037acf6-2509-403d-b519-ac7c67f7c92c', url: 'https://github.com/manju551609/maven-web-application.git'
@@ -23,3 +27,31 @@ node{
     }
 }
 }
+catch(e){
+currentBuild.result = "FAILURE"
+}
+finally{
+sendSlackNotification(currentBuild.result)
+}
+//sendSlackNotification
+def sendSlackNotification(string buildstatus = 'STARTED'
+//build status null means success
+buildstatus = buildstatus ?:'SUCCESS'
+//Default values
+def colorName = 'RED'
+def colorCode = '#FF0000'
+def subject = "${buildstatus} : job ${env.JOB_NAME} [${env.BUILD_NUMBER}]"
+//overide default values based on build status
+if (builstatus == 'STARTED'){
+def colorName = 'ORANGE'
+def colorCode = '#FFA500'
+}else if (buildstatus == 'SUCCESS'){
+def colorName = 'GREEN'
+def colorCode = '#00FF00'
+}else{
+def colorName = 'RED'
+def colorCode = '#FF0000'
+}
+//send notification
+slackSend (color: colorcode , message: summary)
+
