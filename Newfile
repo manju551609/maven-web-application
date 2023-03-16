@@ -54,4 +54,4 @@ def colorCode = '#FF0000'
 }
 //send notification
 slackSend (color: colorcode , message: summary)
-
+}
