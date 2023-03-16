@@ -34,7 +34,7 @@ finally{
 sendSlackNotification(currentBuild.result)
 }
 //sendSlackNotification
-def sendSlackNotification(string buildstatus = 'STARTED'
+def sendSlackNotification(string buildstatus = 'STARTED')
 //build status null means success
 buildstatus = buildstatus ?:'SUCCESS'
 //Default values
